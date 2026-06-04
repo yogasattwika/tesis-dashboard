@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard Tesis</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+  padding: 15px;
+  font-size: 13px;
+}
+
+h3, h5 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.kpi {
+  padding: 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+canvas {
+  max-height: 220px !important;
+}
+
+table {
+  font-size: 12px;
+}
+  </style>
+</head>
+
+<body>
+
+<h3>Dashboard Tesis</h3>
+
+<div class="d-flex gap-2 mb-3">
+  <select id="filter-mode" class="form-select form-select-sm w-auto">
+    <option value="all">Semua</option>
+    <option value="kos">Kos</option>
+    <option value="laundry">Laundry</option>
+  </select>
+
+  <select id="filter-bulan" class="form-select form-select-sm w-auto">
+    <option value="all">Semua Bulan</option>
+    <option value="1">Jan</option>
+    <option value="2">Feb</option>
+    <option value="3">Mar</option>
+    <option value="4">Apr</option>
+    <option value="5">Mei</option>
+    <option value="6">Jun</option>
+    <option value="7">Jul</option>
+    <option value="8">Agt</option>
+    <option value="9">Sep</option>
+    <option value="10">Okt</option>
+    <option value="11">Nov</option>
+    <option value="12">Des</option>
+  </select>
+</div>
+
+<!-- KOS -->
+<div id="section-kos" class="card p-3 mb-3">
+  <h6 class="mb-2">Dashboard Kos</h6>
+  <div id="kpi-kos-row" class="row g-2"></div>
+  <canvas id="chartKos"></canvas>
+  <div style="max-height:200px; overflow-y:auto;">
+  <table class="table table-sm mt-3">
+  <thead>
+    <tr>
+      <th>Bulan</th>
+      <th>Occupancy</th>
+      <th>Kamar</th>
+      <th>Pemasukan</th>
+    </tr>
+  </thead>
+  <tbody id="table-kos"></tbody>
+</table>
+</div>
+<div id="diagnostic-kos" class="mt-3"></div>
+<div id="detail-churn" class="mt-3"></div>
+</div>
+
+<!-- LAUNDRY -->
+<div id="section-laundry" class="card p-3 mb-3">
+  <h5>Laundry</h5>
+  <div id="kpi-laundry-row" class="row"></div>
+  <canvas id="chartLaundry"></canvas>
+
+  
+  <div id="insight-laundry"></div>
+  <div id="business-status" class="mt-2"></div>
+
+  
+  <div id="laundry-detail" style="display:none;">
+  <canvas id="chartPengeluaran"></canvas>
+  <div id="insight-pengeluaran" class="mt-2"></div>
+  <div id="kpi-profit"></div>
+  </div>
+
+  <div style="max-height:200px; overflow-y:auto;">
+  <table class="table table-sm mt-3">
+  <thead>
+    <tr>
+      <th>Tanggal</th>
+      <th>Transaksi</th>
+      <th>Pendapatan</th>
+      <th>Profit</th>
+    </tr>
+  </thead>
+  <tbody id="table-laundry"></tbody>
+  </table>
+  </div>
+</div>
+
+<!-- DSS -->
+<h5>Rekomendasi</h5>
+<div id="rekom-kos" class="mb-2"></div>
+<div id="summary-kos" class="mt-2"></div>
+<div id="rekom-laundry"></div>
+
+
+<script>
+
+let kosData = [];
+let laundryData = [];
+let pengeluaranData = [];
+
+// ================= FETCH ALL =================
+Promise.all([
+  
+  fetch('/api/kos').then(r=>r.json()),
+  fetch('/api/laundry').then(r=>r.json()),
+  fetch('/api/pengeluaran_laundry').then(r=>r.json())
+]).then(([kos, laundry, pengeluaran])=>{
+ 
+  kosData = kos;
+  laundryData = laundry;
+  pengeluaranData = pengeluaran;
+
+  console.log("KOS:", kosData);
+  console.log("LAUNDRY:", laundryData);
+  console.log("PENGELUARAN:", pengeluaranData);
+
+  applyFilter();
+
+});
+
+// ================= FILTER =================
+function applyFilter(){
+
+  const mode = document.getElementById("filter-mode").value;
+  const bulan = document.getElementById("filter-bulan").value;
+
+  let kosFiltered = kosData;
+  let laundryFiltered = laundryData;
+  let pengeluaranFiltered = pengeluaranData;
+
+  // ================= FILTER =================
+  if (bulan !== "all") {
+
+    // FILTER KOS (AMAN SEMUA FORMAT)
+    kosFiltered = kosData.filter(d => {
+
+      // kalau angka
+      if (!isNaN(d.bulan)) {
+        return Number(d.bulan) === Number(bulan);
+      }
+
+      // kalau string bulan (Jan, Feb, dst)
+      const bulanMap = {
+        "Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4,
+        "Mei": 5, "Jun": 6, "Jul": 7, "Agt": 8,
+        "Sep": 9, "Okt": 10, "Nov": 11, "Des": 12
+      };
+
+      return bulanMap[d.bulan] === Number(bulan);
+      console.log("HASIL KOS FILTER:", kosFiltered);
+    });
+
+    // 🔥 FILTER LAUNDRY
+    laundryFiltered = laundryData.filter(d => {
+      const bulanData = d.tanggal.split("-")[1];
+      return Number(bulanData) === Number(bulan);
+    });
+
+    // 🔥 FILTER PENGELUARAN
+    pengeluaranFiltered = pengeluaranData.filter(d => {
+      const bulanData = d.tanggal.split("-")[1];
+      return Number(bulanData) === Number(bulan);
+    });
+  }
+
+  // DEBUG (boleh hapus nanti)
+  console.log("MODE:", mode);
+  console.log("KOS FILTERED:", kosFiltered);
+
+  // ================= RENDER =================
+ document.getElementById("section-kos").style.display = "none";
+document.getElementById("section-laundry").style.display = "none";
+document.getElementById("diagnostic-kos").innerHTML = "";
+
+// ===== MODE KOS =====
+if (mode === "kos") {
+  document.getElementById("section-kos").style.display = "block";
+  renderKos(kosFiltered);
+
+  // 🔥 DIAGNOSTIK MUNCUL DI SINI
+  renderDiagnostikKos(kosFiltered);
+  renderSummaryKos(kosFiltered);
+}
+
+// ===== MODE LAUNDRY =====
+else if (mode === "laundry") {
+  document.getElementById("section-laundry").style.display = "block";
+  renderLaundry(laundryFiltered);
+  renderPengeluaran(pengeluaranFiltered);
+}
+
+// ===== MODE ALL =====
+else {
+  document.getElementById("section-kos").style.display = "block";
+  document.getElementById("section-laundry").style.display = "block";
+
+  renderKos(kosFiltered);
+  renderLaundry(laundryFiltered);
+  renderPengeluaran(pengeluaranFiltered);
+}
+
+  // ================= DSS =================
+  if (mode === "kos") {
+    loadRekomendasiKos(kosFiltered);
+    document.getElementById("rekom-laundry").innerHTML = "";
+  } 
+  else if (mode === "laundry") {
+    loadRekomendasiLaundry(laundryFiltered);
+    document.getElementById("rekom-kos").innerHTML = "";
+  }
+  else {
+    loadRekomendasiKos(kosFiltered);
+    loadRekomendasiLaundry(laundryFiltered);
+  }
+  const detail = document.getElementById("laundry-detail");
+
+  if (mode === "laundry") {
+    detail.style.display = "block";
+  } else {
+    detail.style.display = "none";
+  }
+}
+// ================= RENDER KOS =================
+function renderKos(data){
+
+  const container = document.getElementById("kpi-kos-row");
+  const tbody = document.getElementById("table-kos");
+
+  // ================= HANDLE DATA KOSONG =================
+  if(!data || data.length === 0){
+
+    const bulanText = document.getElementById("filter-bulan").selectedOptions[0].text;
+
+    container.innerHTML = `
+      <div class="alert alert-warning text-center w-100">
+        Data kos tidak tersedia pada bulan ${bulanText}
+      </div>
+    `;
+
+    // hapus chart lama
+    if (window.chartKos && typeof window.chartKos.destroy === "function") {
+      window.chartKos.destroy();
+    }
+
+    // kosongkan tabel
+    tbody.innerHTML = "";
+
+    return;
+  }
+
+  // ================= KPI =================
+  container.innerHTML = "";
+
+  const first = data[0];
+
+  const kpis = [
+    { title: "Occupancy", value: (first.occupancy_rate*100).toFixed(1) + "%" },
+    { title: "Total Kamar", value: first.total_kamar },
+    { title: "Hari Kosong", value: first.rata_hari_kosong },
+    { title: "Pemasukan", value: "Rp " + new Intl.NumberFormat('id-ID').format(first.pemasukan_kos_bulanan) }
+  ];
+
+  kpis.forEach(k => {
+    const col = document.createElement("div");
+    col.className = "col-6 col-md-3";
+
+    col.innerHTML = `
+      <div class="kpi text-center">
+        <div style="font-size:11px;">${k.title}</div>
+        <div style="font-size:14px; font-weight:bold;">${k.value}</div>
+      </div>
+    `;
+
+    container.appendChild(col);
+  });
+
+  // ================= CHART =================
+  const ctx = document.getElementById("chartKos");
+
+  if (window.chartKos && typeof window.chartKos.destroy === "function") {
+    window.chartKos.destroy();
+  }
+
+  window.chartKos = new Chart(ctx,{
+    type:'line',
+    data:{
+      labels: data.map(d => d.bulan),
+      datasets:[{
+        label: "Occupancy",
+        data: data.map(d => d.occupancy_rate)
+      }]
+    }
+  });
+  options: {
+  onClick: (evt, elements) => {
+    if(elements.length > 0){
+      const index = elements[0].index;
+      renderChurnDetail(data[index]);
+    }
+  }
+}
+
+  // ================= TABLE =================
+  tbody.innerHTML = "";
+
+  data.forEach(d => {
+  const tr = document.createElement("tr");
+
+  // klik row → tampilkan detail
+  tr.style.cursor = "pointer";
+  tr.onclick = () => renderChurnDetail(d);
+
+    tr.innerHTML = `
+      <td>${d.bulan}</td>
+      <td>${(d.occupancy_rate*100).toFixed(1)}%</td>
+      <td>${d.total_kamar}</td>
+      <td>Rp ${new Intl.NumberFormat('id-ID').format(d.pemasukan_kos_bulanan)}</td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+// ================= RENDER kos diagnostik =================
+function renderDiagnostikKos(data){
+
+  const el = document.getElementById("diagnostic-kos");
+  el.innerHTML = "";
+
+  if(!data || data.length === 0){
+    el.innerHTML = `<div class="alert alert-secondary">Tidak ada data</div>`;
+    return;
+  }
+
+  const totalMasuk = data.reduce((s,d)=>s+(d.jumlah_masuk||0),0);
+  const totalKeluar = data.reduce((s,d)=>s+(d.jumlah_keluar||0),0);
+  const totalBiaya = data.reduce((s,d)=>s+(d.biaya_operasional||0),0);
+  const totalTakTerduga = data.reduce((s,d)=>s+(d.biaya_tak_terduga||0),0);
+  const totalProfit = data.reduce((s,d)=>s+(d.profit_kos||0),0);
+
+  const avgOccupancy = data.reduce((s,d)=>s+(d.occupancy_rate||0),0)/data.length;
+
+  let insight = [];
+
+  // 🔥 churn
+  if(totalKeluar > totalMasuk){
+    insight.push("Tingkat keluar lebih tinggi → indikasi churn penghuni");
+  }
+
+  // 🔥 stabilitas
+  if(totalMasuk > totalKeluar){
+    insight.push("Penghuni bertambah → hunian berkembang");
+  }
+
+  // 🔥 efisiensi biaya
+  if(totalTakTerduga > totalBiaya * 0.3){
+    insight.push("Biaya tak terduga tinggi → perlu kontrol operasional");
+  }
+
+  // 🔥 occupancy
+  if(avgOccupancy < 0.8){
+    insight.push("Tingkat hunian rendah → perlu strategi pemasaran");
+  }
+
+  // 🔥 profit
+  if(totalProfit < 20000000){
+    insight.push("Profit relatif rendah → optimasi pendapatan diperlukan");
+  } else {
+    insight.push("Profit dalam kondisi sehat");
+  }
+
+  el.innerHTML = `
+    <div class="alert alert-secondary">
+      <b>Diagnostik Kos</b><br><br>
+
+      Masuk: ${totalMasuk}<br>
+      Keluar: ${totalKeluar}<br>
+      Biaya Operasional: Rp ${new Intl.NumberFormat('id-ID').format(totalBiaya)}<br>
+      Tak Terduga: Rp ${new Intl.NumberFormat('id-ID').format(totalTakTerduga)}<br>
+      Profit: Rp ${new Intl.NumberFormat('id-ID').format(totalProfit)}<br><br>
+
+      Insight:<br>
+      ${insight.map(i => `• ${i}`).join("<br>")}
+    </div>
+  `;
+}
+
+function renderChurnDetail(item){
+
+  const el = document.getElementById("detail-churn");
+
+  if(!item){
+    el.innerHTML = "";
+    return;
+  }
+
+  const net = (item.jumlah_masuk || 0) - (item.jumlah_keluar || 0);
+
+  let status = "";
+  if(net > 0){
+    status = "Pertumbuhan penghuni";
+  } else if(net < 0){
+    status = "Penurunan penghuni (churn tinggi)";
+  } else {
+    status = "Stabil";
+  }
+
+  el.innerHTML = `
+    <div class="alert alert-info">
+      <b>Detail Bulan ${item.bulan}</b><br><br>
+
+      Masuk: ${item.jumlah_masuk}<br>
+      Keluar: ${item.jumlah_keluar}<br>
+      Net: ${net}<br><br>
+
+      Insight:<br>
+      • ${status}
+    </div>
+  `;
+}
+
+function renderSummaryKos(data){
+
+  const el = document.getElementById("summary-kos");
+  el.innerHTML = "";
+
+  if(!data || data.length === 0) return;
+
+  // ambil bulan terakhir
+  const last = data[data.length - 1];
+
+  const masuk = last.jumlah_masuk || 0;
+  const keluar = last.jumlah_keluar || 0;
+  const occupancy = last.occupancy_rate || 0;
+  const profit = last.profit_kos || 0;
+
+  let kesimpulan = "";
+  let rekomendasi = "";
+
+  // 🔥 LOGIC CERDAS (SIMPLE TAPI KENA)
+  if(keluar > masuk){
+    kesimpulan = "Terjadi penurunan jumlah penghuni pada bulan ini.";
+    rekomendasi = "Perlu evaluasi fasilitas atau strategi retensi penghuni.";
+  }
+  else if(occupancy < 0.8){
+    kesimpulan = "Tingkat hunian masih tergolong rendah.";
+    rekomendasi = "Disarankan meningkatkan promosi atau penawaran.";
+  }
+  else if(profit < 20000000){
+    kesimpulan = "Profit relatif belum optimal.";
+    rekomendasi = "Perlu efisiensi biaya operasional.";
+  }
+  else{
+    kesimpulan = "Kondisi usaha kos dalam keadaan stabil dan sehat.";
+    rekomendasi = "Pertahankan kualitas layanan dan operasional.";
+  }
+
+  el.innerHTML = `
+    <div class="alert alert-light border">
+      <b>📊 Kesimpulan Bulan ${last.bulan}</b><br><br>
+      ${kesimpulan}<br><br>
+      <b>💡 Rekomendasi:</b><br>
+      • ${rekomendasi}
+    </div>
+  `;
+}
+
+// ================= RENDER LAUNDRY =================
+function renderLaundry(data){
+
+  const container = document.getElementById("kpi-laundry-row");
+
+  // ================= HANDLE DATA KOSONG =================
+  if (!data || data.length === 0) {
+
+    const bulanText = document.getElementById("filter-bulan").selectedOptions[0].text;
+
+    container.innerHTML = `
+      <div class="alert alert-warning text-center w-100">
+        Data laundry tidak tersedia pada bulan ${bulanText}
+      </div>
+    `;
+
+    // hapus chart laundry
+    if (window.chartLaundry && typeof window.chartLaundry.destroy === "function") {
+      window.chartLaundry.destroy();
+    }
+
+    // hapus chart pengeluaran
+    if (window.chartPengeluaran && typeof window.chartPengeluaran.destroy === "function") {
+      window.chartPengeluaran.destroy();
+    }
+
+    // kosongkan elemen lain
+    document.getElementById("kpi-profit").innerHTML = "";
+    document.getElementById("insight-laundry").innerText = "";
+    document.getElementById("business-status").innerText = "";
+
+    return;
+  }
+
+  // ================= KPI =================
+  container.innerHTML = "";
+
+  const totalTransaksi = data.reduce((s,d)=>s+(d.jumlah_transaksi||0),0);
+  const totalPendapatan = data.reduce((s,d)=>s+(d.pendapatan_harian||0),0);
+  const totalProfit = data.reduce((s,d)=>s+(d.laba_harian||0),0);
+
+  const kpis = [
+    { title: "Total Hari", value: data.length },
+    { title: "Transaksi", value: totalTransaksi },
+    { title: "Pendapatan", value: "Rp " + new Intl.NumberFormat('id-ID').format(totalPendapatan) },
+    { title: "Profit", value: "Rp " + new Intl.NumberFormat('id-ID').format(totalProfit) }
+  ];
+
+  kpis.forEach(k => {
+    const col = document.createElement("div");
+    col.className = "col-6 col-md-3";
+
+    col.innerHTML = `
+      <div class="kpi text-center">
+        <div style="font-size:11px;">${k.title}</div>
+        <div style="font-size:14px; font-weight:bold;">${k.value}</div>
+      </div>
+    `;
+
+    container.appendChild(col);
+  });
+
+  // ================= CHART =================
+  const canvas = document.getElementById('chartLaundry');
+
+  if (window.chartLaundry && typeof window.chartLaundry.destroy === "function") {
+    window.chartLaundry.destroy();
+  }
+
+  window.chartLaundry = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: data.map(d => d.tanggal.split(" ")[0]),
+      datasets: [{
+        label: 'Transaksi',
+        data: data.map(d => d.jumlah_transaksi)
+      }]
+    }
+  });
+
+  // ================= STATUS =================
+  let status = "";
+  let color = "";
+
+  if (totalProfit > 5000000) {
+    status = "Bisnis sehat";
+    color = "success";
+  } else if (totalProfit > 2000000) {
+    status = "Cukup stabil";
+    color = "warning";
+  } else {
+    status = "Perlu perhatian";
+    color = "danger";
+  }
+
+  const statusEl = document.getElementById("business-status");
+  statusEl.className = `alert alert-${color} mt-2`;
+  statusEl.innerText = status;
+
+  // ================= INSIGHT =================
+  let insight = [];
+
+  const avgTrx = totalTransaksi / data.length;
+  const antrian = data.filter(d => d.indikator_antrian === "potensi_antrian").length;
+
+  if (avgTrx > 20) insight.push("Transaksi tinggi (ramai)");
+  if (antrian > 5) insight.push("Sering terjadi antrian");
+  if (totalProfit < 3000000) insight.push("Profit rendah");
+
+  if (insight.length === 0) insight.push("Operasional normal");
+
+  document.getElementById("insight-laundry").innerText =
+    insight.join(" • ");
+
+  const tbody = document.getElementById("table-laundry");
+    tbody.innerHTML = "";
+
+    data.slice(0, 10).forEach(d => {
+      const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${d.tanggal.split(" ")[0]}</td>
+          <td>${d.jumlah_transaksi}</td>
+          <td>Rp ${new Intl.NumberFormat('id-ID').format(d.pendapatan_harian)}</td>
+          <td>Rp ${new Intl.NumberFormat('id-ID').format(d.laba_harian)}</td>
+          `;
+
+      tbody.appendChild(tr);
+    });
+}
+
+// ================= PENGELUARAN =================
+function renderPengeluaran(data){
+
+  if(!data || data.length === 0) return;
+
+  const ctx = document.getElementById("chartPengeluaran");
+
+  if (window.chartPengeluaran && typeof window.chartPengeluaran.destroy === "function") {
+    window.chartPengeluaran.destroy();
+  }
+
+  window.chartPengeluaran = new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels: data.map(d => d.tanggal ? d.tanggal.split(" ")[0] : ""),
+      datasets:[{
+        label: "Pengeluaran (Rp)",
+        data: data.map(d => d.nominal || 0)
+      }]
+    }
+  });
+
+  const total = data.reduce((s,d)=>s+(d.nominal||0),0);
+  const max = Math.max(...data.map(d=>d.nominal||0));
+
+  let insight = [];
+
+  if (max > 2000000) {
+    insight.push("Terdapat pengeluaran besar (kemungkinan biaya tidak terduga)");
+  }
+
+  if (total > 10000000) {
+    insight.push("Total pengeluaran tinggi → perlu kontrol biaya");
+  }
+
+  if (insight.length === 0) {
+    insight.push("Pengeluaran relatif stabil");
+  }
+
+  document.getElementById("insight-pengeluaran").innerText =
+    insight.join(" • ");
+}
+
+// ================= DSS Kos=================
+function loadRekomendasiKos(kos){
+
+  const el = document.getElementById("rekom-kos");
+  el.innerHTML = "";
+
+  let rekom = [];
+
+  if (kos && kos.length > 0) {
+
+    const occupancy = kos.reduce((s,d)=>s+(d.occupancy_rate||0),0)/kos.length;
+
+    rekom.push(`📊 Hunian: ${(occupancy*100).toFixed(1)}%`);
+
+    if (occupancy >= 0.9) {
+      rekom.push("Hunian sangat tinggi → pertahankan");
+    } else if (occupancy >= 0.7) {
+      rekom.push("Hunian cukup → bisa ditingkatkan");
+    } else {
+      rekom.push("Hunian rendah → perlu promosi");
+    }
+
+  } else {
+    rekom.push("⚠️ Tidak ada data kos");
+  }
+
+  el.innerHTML = `
+    <div class="alert alert-primary">
+      <b>Kos:</b><br>${rekom.join("<br>")}
+    </div>
+  `;
+}
+//================ DSS Laundry ============
+function loadRekomendasiLaundry(laundry){
+
+  const el = document.getElementById("rekom-laundry");
+  el.innerHTML = "";
+
+  let rekom = [];
+
+  if (laundry && laundry.length > 0) {
+
+    const totalTrx = laundry.reduce((s,d)=>s+(d.jumlah_transaksi||0),0);
+    const avgTrx = totalTrx / laundry.length;
+
+    const totalProfit = laundry.reduce((s,d)=>s+(d.laba_harian||0),0);
+    const antrian = laundry.filter(d => d.indikator_antrian === "potensi_antrian").length;
+
+    if (avgTrx > 20) {
+      rekom.push("Transaksi tinggi → tambah staf");
+    }
+
+    if (antrian > 5) {
+      rekom.push("Potensi antrian tinggi");
+    }
+
+    if (totalProfit < 3000000) {
+      rekom.push("Profit rendah → evaluasi biaya");
+    }
+
+    if (rekom.length === 0) {
+      rekom.push("Operasional normal");
+    }
+
+  } else {
+    rekom.push("⚠️ Tidak ada data laundry");
+  }
+
+  el.innerHTML = `
+    <div class="alert alert-success">
+      <b>Laundry:</b><br>${rekom.join("<br>")}
+    </div>
+  `;
+}
+
+// ================= EVENT =================
+document.getElementById("filter-mode").addEventListener("change",applyFilter);
+document.getElementById("filter-bulan").addEventListener("change",applyFilter);
+
+</script>
+
+</body>
+</html>

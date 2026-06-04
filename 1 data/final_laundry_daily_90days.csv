@@ -1,0 +1,91 @@
+tanggal,hari,cuaca,jumlah_transaksi,jumlah_sprei,berat_total_kg,jenis_layanan_terbanyak,jam_teramai,staff_pagi_count,staff_sore_count,total_staff_available,hours_pagi,hours_sore,kapasitas_teoritis_transaksi,status_mesin,stok_deterjen,estimasi_waktu_selesai_jam,indikator_antrian,biaya_operasional,biaya_tak_terduga,biaya_lembur,pendapatan_harian,laba_harian,bulan
+2024-01-01,Monday,cerah,9,0,84.2,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,6.75,ok,235305,0,0,589442,354137,2024-01
+2024-01-02,Tuesday,hujan,27,0,273.1,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,313678,1020000,1020000,1911380,577702,2024-01
+2024-01-03,Wednesday,cerah,8,0,80.9,cuci biasa,18:00,2,2,4,8,7,10,normal,menipis,6.0,ok,314231,89504,0,566443,162708,2024-01
+2024-01-04,Thursday,hujan,15,0,151.4,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,11.25,potensi_antrian,255878,300000,300000,1060079,504201,2024-01
+2024-01-05,Friday,cerah,27,0,261.2,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,157392,1020000,1020000,1828558,651166,2024-01
+2024-01-06,Saturday,cerah,28,3,292.6,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,170932,1080000,1080000,2078545,827613,2024-01
+2024-01-07,Sunday,cerah,27,2,284.3,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,255983,1020000,1020000,2009790,733807,2024-01
+2024-01-08,Monday,cerah,9,0,95.2,cuci-setrika,18:00,2,2,4,8,7,10,normal,menipis,6.75,ok,161093,54014,0,666270,451163,2024-01
+2024-01-09,Tuesday,cerah,9,0,100.9,cuci-setrika,19:00,2,2,4,8,7,10,normal,cukup,6.75,ok,294475,0,0,706001,411526,2024-01
+2024-01-10,Wednesday,hujan,10,0,105.4,paket cepat,19:00,2,2,4,8,7,10,normal,cukup,7.5,ok,236672,0,0,737836,501164,2024-01
+2024-01-11,Thursday,hujan,13,0,146.6,cuci-setrika,18:00,2,2,4,8,7,10,rusak,cukup,9.75,potensi_antrian,201293,408832,180000,1026417,416292,2024-01
+2024-01-12,Friday,cerah,28,2,278.0,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,239588,1080000,1080000,1965705,646117,2024-01
+2024-01-13,Saturday,cerah,28,1,283.3,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,329208,1080000,1080000,1993435,584227,2024-01
+2024-01-14,Sunday,cerah,26,0,256.0,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,19.5,potensi_antrian,348713,960000,960000,1792194,483481,2024-01
+2024-01-15,Monday,cerah,11,0,107.5,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,8.25,potensi_antrian,183307,60000,60000,752439,509132,2024-01
+2024-01-16,Tuesday,cerah,9,0,90.4,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,6.75,ok,278778,0,0,633101,354323,2024-01
+2024-01-17,Wednesday,cerah,6,0,74.9,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,4.5,ok,203932,0,0,524244,320312,2024-01
+2024-01-18,Thursday,cerah,8,0,88.6,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,6.0,ok,209494,0,0,620475,410981,2024-01
+2024-01-19,Friday,cerah,27,1,285.6,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,173061,1020000,1020000,2009006,815945,2024-01
+2024-01-20,Saturday,cerah,30,0,302.6,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,22.5,potensi_antrian,274049,1200000,1200000,2118048,643999,2024-01
+2024-01-21,Sunday,cerah,27,1,273.8,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,340455,1020000,1020000,1926273,565818,2024-01
+2024-01-22,Monday,cerah,9,0,90.1,cuci-setrika,19:00,2,2,4,8,7,10,normal,cukup,6.75,ok,236740,0,0,630756,394016,2024-01
+2024-01-23,Tuesday,cerah,10,0,95.4,paket cepat,18:00,2,2,4,8,7,10,normal,cukup,7.5,ok,204917,0,0,667978,463061,2024-01
+2024-01-24,Wednesday,cerah,5,0,52.2,cuci-setrika,17:00,2,2,4,8,7,10,rusak,cukup,3.75,ok,252916,182265,0,365651,-69530,2024-01
+2024-01-25,Thursday,cerah,8,0,96.1,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,6.0,ok,226325,0,0,672376,446051,2024-01
+2024-01-26,Friday,cerah,30,0,289.8,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,22.5,potensi_antrian,169097,1200000,1200000,2028934,659837,2024-01
+2024-01-27,Saturday,hujan,66,2,676.9,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,49.5,potensi_antrian,173752,3360000,3360000,4758172,1224420,2024-01
+2024-01-28,Sunday,hujan,44,2,441.0,cuci biasa,18:00,2,2,4,8,7,10,normal,menipis,33.0,potensi_antrian,156960,2159626,2040000,3107114,790528,2024-01
+2024-01-29,Monday,cerah,12,0,133.2,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,9.0,potensi_antrian,318270,120000,120000,932599,494329,2024-01
+2024-01-30,Tuesday,cerah,10,0,106.5,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,7.5,ok,157564,0,0,745593,588029,2024-01
+2024-01-31,Wednesday,hujan,14,0,127.1,paket cepat,18:00,2,2,4,8,7,10,rusak,cukup,10.5,potensi_antrian,239431,512744,240000,889650,137475,2024-01
+2024-02-01,Thursday,cerah,7,0,77.3,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,5.25,ok,196600,0,0,540831,344231,2024-02
+2024-02-02,Friday,cerah,30,2,293.5,cuci biasa,20:00,2,2,4,8,7,10,normal,menipis,22.5,potensi_antrian,303962,1252719,1200000,2074213,517532,2024-02
+2024-02-03,Saturday,cerah,28,0,296.2,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,191846,1080000,1080000,2073522,801676,2024-02
+2024-02-04,Sunday,hujan,46,1,470.0,cuci biasa,17:00,2,2,4,8,7,10,normal,menipis,34.5,potensi_antrian,262755,2255004,2160000,3300211,782452,2024-02
+2024-02-05,Monday,cerah,11,1,119.5,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,8.25,potensi_antrian,183662,60000,60000,846571,602909,2024-02
+2024-02-06,Tuesday,hujan,22,1,229.1,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,16.5,potensi_antrian,306921,720000,720000,1613397,586476,2024-02
+2024-02-07,Wednesday,cerah,6,0,55.0,cuci-setrika,19:00,2,2,4,8,7,10,normal,cukup,4.5,ok,176916,0,0,384836,207920,2024-02
+2024-02-08,Thursday,cerah,8,0,89.0,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,6.0,ok,226367,0,0,623110,396743,2024-02
+2024-02-09,Friday,hujan,61,1,602.8,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,45.75,potensi_antrian,250494,3060000,3060000,4229872,919378,2024-02
+2024-02-10,Saturday,cerah,28,1,284.0,cuci biasa,20:00,2,2,4,8,7,10,normal,menipis,21.0,potensi_antrian,258177,1194157,1080000,1998251,545917,2024-02
+2024-02-11,Sunday,hujan,46,2,486.4,paket cepat,19:00,2,2,4,8,7,10,normal,cukup,34.5,potensi_antrian,298697,2160000,2160000,3424684,965987,2024-02
+2024-02-12,Monday,cerah,12,0,96.9,paket cepat,19:00,2,2,4,8,7,10,normal,cukup,9.0,potensi_antrian,159686,120000,120000,678372,398686,2024-02
+2024-02-13,Tuesday,hujan,23,0,228.7,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,17.25,potensi_antrian,168073,780000,780000,1601135,653062,2024-02
+2024-02-14,Wednesday,cerah,5,0,47.2,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,3.75,ok,228222,0,0,330163,101941,2024-02
+2024-02-15,Thursday,cerah,8,1,78.8,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,6.0,ok,181822,0,0,561528,379706,2024-02
+2024-02-16,Friday,cerah,30,0,296.8,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,22.5,potensi_antrian,219252,1200000,1200000,2077632,658380,2024-02
+2024-02-17,Saturday,hujan,53,1,508.7,cuci-setrika,20:00,2,2,4,8,7,10,rusak,cukup,39.75,potensi_antrian,307261,2868051,2580000,3570874,395562,2024-02
+2024-02-18,Sunday,cerah,28,1,286.2,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,243980,1080000,1080000,2013208,689228,2024-02
+2024-02-19,Monday,cerah,11,0,132.3,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,8.25,potensi_antrian,188787,60000,60000,926159,677372,2024-02
+2024-02-20,Tuesday,cerah,12,1,150.8,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,9.0,potensi_antrian,257539,120000,120000,1065787,688248,2024-02
+2024-02-21,Wednesday,hujan,11,0,136.9,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,8.25,potensi_antrian,287069,60000,60000,958279,611210,2024-02
+2024-02-22,Thursday,hujan,15,0,147.9,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,11.25,potensi_antrian,204220,300000,300000,1035214,530994,2024-02
+2024-02-23,Friday,cerah,27,1,263.2,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,340135,1020000,1020000,1852303,492168,2024-02
+2024-02-24,Saturday,cerah,27,0,256.1,cuci-setrika,20:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,246111,1020000,1020000,1792815,526704,2024-02
+2024-02-25,Sunday,hujan,50,0,527.6,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,37.5,potensi_antrian,245665,2400000,2400000,3693535,1047870,2024-02
+2024-02-26,Monday,cerah,9,0,83.4,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,6.75,ok,231557,0,0,583637,352080,2024-02
+2024-02-27,Tuesday,hujan,18,0,188.9,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,13.5,potensi_antrian,224567,480000,480000,1322153,617586,2024-02
+2024-02-28,Wednesday,hujan,17,0,160.9,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,12.75,potensi_antrian,231768,420000,420000,1126339,474571,2024-02
+2024-02-29,Thursday,cerah,6,1,66.9,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,4.5,ok,260155,0,0,478245,218090,2024-02
+2024-03-01,Friday,hujan,58,0,554.8,cuci-setrika,18:00,2,2,4,8,7,10,normal,menipis,43.5,potensi_antrian,295448,2949086,2880000,3883820,639286,2024-03
+2024-03-02,Saturday,cerah,26,0,251.6,cuci biasa,20:00,2,2,4,8,7,10,normal,menipis,19.5,potensi_antrian,251665,1055734,960000,1760870,453471,2024-03
+2024-03-03,Sunday,cerah,28,4,256.4,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,209500,1080000,1080000,1834487,544987,2024-03
+2024-03-04,Monday,cerah,9,0,77.0,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,6.75,ok,306951,0,0,538860,231909,2024-03
+2024-03-05,Tuesday,cerah,11,1,112.8,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,8.25,potensi_antrian,196099,60000,60000,799741,543642,2024-03
+2024-03-06,Wednesday,cerah,8,0,80.9,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,6.0,ok,302155,0,0,565961,263806,2024-03
+2024-03-07,Thursday,hujan,8,0,79.1,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,6.0,ok,206622,0,0,553798,347176,2024-03
+2024-03-08,Friday,hujan,56,2,557.1,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,42.0,potensi_antrian,293309,2760000,2760000,3919958,866649,2024-03
+2024-03-09,Saturday,cerah,25,0,250.3,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,18.75,potensi_antrian,248826,900000,900000,1752197,603371,2024-03
+2024-03-10,Sunday,cerah,28,1,292.0,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,186609,1080000,1080000,2054147,787538,2024-03
+2024-03-11,Monday,cerah,9,0,93.0,cuci biasa,20:00,2,2,4,8,7,10,normal,cukup,6.75,ok,274577,0,0,651120,376543,2024-03
+2024-03-12,Tuesday,cerah,11,0,98.1,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,8.25,potensi_antrian,199067,60000,60000,686931,427864,2024-03
+2024-03-13,Wednesday,cerah,6,1,75.0,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,4.5,ok,336823,0,0,534930,198107,2024-03
+2024-03-14,Thursday,cerah,8,0,88.1,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,6.0,ok,234703,0,0,616656,381953,2024-03
+2024-03-15,Friday,cerah,26,0,268.3,paket cepat,20:00,2,2,4,8,7,10,normal,cukup,19.5,potensi_antrian,226253,960000,960000,1878188,691935,2024-03
+2024-03-16,Saturday,hujan,55,2,551.9,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,41.25,potensi_antrian,157415,2700000,2700000,3883246,1025831,2024-03
+2024-03-17,Sunday,cerah,29,1,279.0,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,21.75,potensi_antrian,227603,1140000,1140000,1962788,595185,2024-03
+2024-03-18,Monday,hujan,22,1,224.6,paket cepat,18:00,2,2,4,8,7,10,normal,cukup,16.5,potensi_antrian,189194,720000,720000,1582397,673203,2024-03
+2024-03-19,Tuesday,cerah,12,0,123.6,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,9.0,potensi_antrian,169552,120000,120000,865236,575684,2024-03
+2024-03-20,Wednesday,cerah,6,0,62.8,cuci-setrika,19:00,2,2,4,8,7,10,normal,cukup,4.5,ok,254245,0,0,439906,185661,2024-03
+2024-03-21,Thursday,cerah,8,0,72.3,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,6.0,ok,346375,0,0,506428,160053,2024-03
+2024-03-22,Friday,hujan,47,2,500.7,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,35.25,potensi_antrian,286355,2220000,2220000,3525215,1018860,2024-03
+2024-03-23,Saturday,cerah,27,2,273.4,cuci-setrika,17:00,2,2,4,8,7,10,normal,cukup,20.25,potensi_antrian,337776,1020000,1020000,1934004,576228,2024-03
+2024-03-24,Sunday,cerah,26,1,241.6,cuci-setrika,18:00,2,2,4,8,7,10,normal,cukup,19.5,potensi_antrian,173199,960000,960000,1701077,567878,2024-03
+2024-03-25,Monday,hujan,19,1,194.8,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,14.25,potensi_antrian,311121,540000,540000,1373700,522579,2024-03
+2024-03-26,Tuesday,hujan,17,1,186.3,cuci-setrika,19:00,2,2,4,8,7,10,normal,cukup,12.75,potensi_antrian,177048,420000,420000,1314401,717353,2024-03
+2024-03-27,Wednesday,hujan,11,2,113.7,paket cepat,17:00,2,2,4,8,7,10,rusak,cukup,8.25,potensi_antrian,279974,255095,60000,815850,280781,2024-03
+2024-03-28,Thursday,cerah,7,0,67.6,cuci biasa,17:00,2,2,4,8,7,10,normal,cukup,5.25,ok,218975,0,0,472929,253954,2024-03
+2024-03-29,Friday,cerah,28,1,285.6,cuci biasa,19:00,2,2,4,8,7,10,normal,cukup,21.0,potensi_antrian,332949,1080000,1080000,2008852,595903,2024-03
+2024-03-30,Saturday,cerah,30,2,287.2,cuci biasa,18:00,2,2,4,8,7,10,normal,cukup,22.5,potensi_antrian,314005,1200000,1200000,2030480,516475,2024-03
